@@ -2,16 +2,14 @@
   "name": "texascouscous",
   "version": "0.1.0",
   "private": true,
-  "devDependencies": {
+  "dependencies": {
+    "react": "^16.0.0",
+    "react-dom": "^16.0.0",
     "isomorphic-fetch": "^2.2.1",
     "material-ui": "^0.19.3",
     "react-scripts": "1.0.14",
     "react-snapshot": "^1.2.0",
     "serve": "^6.2.0"
-  },
-  "dependencies": {
-    "react": "^16.0.0",
-    "react-dom": "^16.0.0"
   },
   "scripts": {
     "start": "npm run build && serve build",
@@ -22,5 +20,8 @@
   },
   "reactSnapshot": {
     "snapshotDelay": 300
+  },
+  "engines": {
+    "node": "8.6.0"
   }
 }
