@@ -4,6 +4,7 @@ import PlayCircleButton from 'material-ui/svg-icons/av/play-circle-outline';
 import PauseCircleButton from 'material-ui/svg-icons/av/pause-circle-outline';
 import Stop from 'material-ui/svg-icons/av/stop';
 import IconButton from 'material-ui/IconButton';
+import CircularProgress from 'material-ui/CircularProgress';
 
 let SelectableList = makeSelectable(List);
 
@@ -55,7 +56,7 @@ export default class Listen extends Component {
       'thriller.mp3'
     ],
     currentSound: null,
-    playing: false,
+    state: 'STOPPED'
   };
 
   constructor(props) {
@@ -65,13 +66,14 @@ export default class Listen extends Component {
   }
 
   componentDidMount() {
-    this.audio.addEventListener('playing', () => {
-      this.setState({ playing: true });
-    });
+    const bind = (event, state) => this.audio.addEventListener(
+      event, () => this.setState({ state })
+    );
 
-    this.audio.addEventListener('pause', () => {
-      this.setState({ playing: false });
-    });
+    bind('playing', 'PLAYING');
+    bind('pause', 'PAUSED');
+    bind('loadstart', 'PENDING');
+    bind('seeking', 'PENDING');
   }
 
   playSound(filename) {
@@ -80,7 +82,7 @@ export default class Listen extends Component {
   };
 
   stop() {
-    this.setState({ currentSound: null });
+    this.setState({ currentSound: null, state: 'STOPPED' });
     this.audio.pause();
     this.audio.setAttribute('src', null);
   }
@@ -90,14 +92,24 @@ export default class Listen extends Component {
   }
 
   render() {
-    const { currentSound, sounds, playing } = this.state;
+    const { currentSound, sounds, state } = this.state;
 
     return (
       <div>
         <div style={{ display: 'flex' }}>
-          <IconButton onClick={this.stop}>
-            <Stop />
-          </IconButton>
+          {state === 'PENDING' && (
+            <CircularProgress style={{ padding: 15 }} thickness={2} size={20} />
+          )}
+          {['PLAYING', 'PAUSED'].includes(state) && (
+            <IconButton onClick={this.stop}>
+              <Stop />
+            </IconButton>
+          )}
+          {state === 'STOPPED' && (
+            <IconButton disabled>
+              <Stop />
+            </IconButton>
+          )}
           <audio
             ref={(audio) => this.audio = audio}
             style={{ flex: 1 }}
@@ -112,7 +124,7 @@ export default class Listen extends Component {
               style={{ textTransform: 'capitalize' }}
               key={filename}
               primaryText={this.getText(filename)}
-              leftIcon={playing && currentSound === filename ? <PauseCircleButton/> : <PlayCircleButton />}
+              leftIcon={state === 'PLAYING' && currentSound === filename ? <PauseCircleButton/> : <PlayCircleButton />}
               onClick={() => this.playSound(filename)}
             />
           ))}
