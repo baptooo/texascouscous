@@ -3,7 +3,7 @@ import fetch from 'isomorphic-fetch';
 const config = {
   apiPath: 'https://graph.facebook.com/v2.3',
   pageId: '43419843244',
-  access_token : 'EAACEdEose0cBAOhpttXlHFUsvN5PLtfEu4tLwqucT610BfirAf4ZBr9DJd4wwCpyx8tOay5xjAWeyZCJYg3tgoGV7ycFF2KVYDJ6oY9mcxfIsbZBhHOEreh3PUsXfzYkMC6RsaE6YlRL4ZA01dGTS92Vp9YfoEZC5EU2ZBsNqeKBeoR7AkbLnq530p7hmpGxkZD'
+  access_token : 'EAACEdEose0cBABZB0ZBvbNu9o3ArOmZAmgVuFHPaYs7XDU4ceoVfmLvGfAwCZA4HpJgpNu0Dzhwj7mx8D6idbFung5YkEFadKIB67EU9g7IKtGx92dWiZA2NMh2x5agvx4EsV2YzpUGUbgpXZBg6A7xQqSpVUFAQRXWZBp6wYNqAQSpGjZBejNGZBuXWCzDwml7AZD'
 };
 
 export default (path = '', params = 'empty=true') =>
