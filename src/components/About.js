@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import {Card, CardHeader, CardMedia, CardTitle, CardText} from 'material-ui/Card';
+import {snapshot} from 'react-snapshot';
 
 import call from '../facebook';
 
@@ -12,9 +13,10 @@ export default class About extends Component {
   };
 
   componentWillMount() {
-    call('', 'fields=name,picture,cover,description').then((data) => {
-      this.setState(data);
-    });
+    snapshot(() => call('', 'fields=name,picture,cover,description'))
+      .then((data) => {
+        this.setState(data);
+      });
   }
 
   render() {

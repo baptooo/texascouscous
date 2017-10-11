@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import {List} from 'material-ui/List';
 import {Card, CardHeader, CardText} from 'material-ui/Card';
 import Subheader from 'material-ui/Subheader';
+import {snapshot} from 'react-snapshot';
 
 import call from '../facebook';
 
@@ -11,9 +12,10 @@ export default class Events extends Component {
   };
 
   componentWillMount() {
-    call('/events').then((events) => {
-      this.setState({ events });
-    });
+    snapshot(() => call('/events'))
+      .then((events) => {
+        this.setState({ events });
+      });
   }
 
   formatDate(time) {
